@@ -34,11 +34,13 @@ jobs:
           zip -r ../flow-antora-ui.zip .
           cd ..
 
-      - name: Upload UI zip to GitHub Release
+      - name: Read Version from package.json
+        id: package-version
+        run: echo "VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
+
+      - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: latest
-          release_name: Latest FLOW Antora UI
-          files: flow-antora-ui.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: "FLOW Antora UI v${{ env.VERSION }}"
+          tag_name: "v${{ env.VERSION }}"
+          token: ${{ secrets.GITHUB_TOKEN }}
