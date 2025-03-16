@@ -43,4 +43,5 @@ jobs:
         with:
           name: "FLOW Antora UI v${{ env.VERSION }}"
           tag_name: "v${{ env.VERSION }}"
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_PAT }}
+          files: flow-antora-ui.zip
