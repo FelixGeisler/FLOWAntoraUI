@@ -25,14 +25,8 @@ jobs:
       - name: Install Gulp CLI
         run: npm install --global gulp-cli
 
-      - name: Run Gulp tasks
-        run: gulp default
-
-      - name: Create UI zip
-        run: |
-          cd build
-          zip -r ../flow-antora-ui.zip .
-          cd ..
+      - name: Run Gulp
+        run: npx gulp
 
       - name: Read Version from package.json
         id: package-version
@@ -47,4 +41,4 @@ jobs:
           name: "FLOW Antora UI v${{ env.VERSION }}"
           tag_name: "v${{ env.VERSION }}"
           token: ${{ secrets.GH_PAT }}
-          files: flow-antora-ui.zip
+          files: flow-ui-bundle.zip

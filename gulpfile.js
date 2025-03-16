@@ -5,7 +5,7 @@ const createTask = require('./gulp.d/lib/create-task')
 const exportTasks = require('./gulp.d/lib/export-tasks')
 const log = require('fancy-log')
 
-const bundleName = 'ui'
+const bundleName = 'flow-ui'
 const buildDir = 'build'
 const previewSrcDir = 'preview-src'
 const previewDestDir = 'public'
