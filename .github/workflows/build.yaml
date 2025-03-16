@@ -32,6 +32,6 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           name: "flow-ui-bundle.zip"
-          tag_name: "v${{ 1.0.0 }}"
+          tag_name: "v1.0.0"
           token: ${{ secrets.GH_PAT }}
           files: ./build/flow-ui-bundle.zip
