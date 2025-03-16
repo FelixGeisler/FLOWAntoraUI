@@ -28,17 +28,9 @@ jobs:
       - name: Run Gulp
         run: npx gulp
 
-      - name: Read Version from package.json
-        id: package-version
-        run: |
-          VERSION=$(jq -r '.version // "1.0.0"' package.json)
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-          echo "Version extracted: $VERSION"
-
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          name: "FLOW Antora UI v${{ env.VERSION }}"
-          tag_name: "v${{ env.VERSION }}"
+          name: "flow-ui-bundle.zip"
           token: ${{ secrets.GH_PAT }}
-          files: flow-ui-bundle.zip
+          files: ./build/flow-ui-bundle.zip
