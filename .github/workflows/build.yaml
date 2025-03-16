@@ -36,7 +36,10 @@ jobs:
 
       - name: Read Version from package.json
         id: package-version
-        run: echo "VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
+        run: |
+          VERSION=$(jq -r '.version // "1.0.0"' package.json)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Version extracted: $VERSION"
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
