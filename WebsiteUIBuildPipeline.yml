@@ -1,0 +1,49 @@
+trigger:
+- main
+
+pool:
+  name: AutomatedTesting
+
+steps:
+- task: NodeTool@0
+  displayName: 'Install Node.js'
+  inputs:
+    versionSpec: '20.x'
+    checkLatest: true
+
+- task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    command: 'install'
+
+- task: gulp@0
+  displayName: 'Run gulp'
+  inputs:
+    gulpFile: 'gulpfile.js'
+    targets: 
+    gulpjs: 'node_modules/gulp/bin/gulp.js'
+    enableCodeCoverage: false
+
+- task: CopyFiles@2
+  displayName: 'Copy files to staging directory'
+  inputs:
+    SourceFolder: 'build'
+    Contents: 'ui-bundle.zip'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+- task: ArtifactoryGenericUpload@2
+  displayName: 'Push Artifacts to JFrog'
+  inputs:
+    artifactoryService: 'AutomatedTesting Artifacts'
+    specSource: 'taskConfiguration'
+    fileSpec: |
+      {
+        "files": [
+          {
+            "pattern": "ui-bundle.zip",
+            "target": "fa-ATCC-DEV-local/WebsiteUI/"
+          }
+        ]
+      }
+    failNoOp: true
+    insecureTls: true
